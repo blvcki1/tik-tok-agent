@@ -1,0 +1,15 @@
+{
+  "name": "tiktok-ai-agent",
+  "version": "1.0.0",
+  "description": "Agent Web TikTok IA - Retouche 9:16, Création de Contenu et Auto-Publication",
+  "main": "tiktok-ai-agent/server.js",
+  "scripts": {
+    "start": "node tiktok-ai-agent/server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["tiktok", "ai", "gemini", "agent", "automation"],
+  "author": "blvcki1",
+  "license": "ISC"
+}

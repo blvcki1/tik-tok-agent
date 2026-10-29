@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Espace Bien-Être & Santé Naturelle — Spécial LIVE TikTok</title>
+  <style>
+    :root {
+      --bg: #071712;
+      --card: #0e261e;
+      --card-hover: #14352a;
+      --emerald: #10b981;
+      --emerald-light: #34d399;
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(16, 185, 129, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #0f2e24 0%, var(--bg) 70%);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 90px;
+      line-height: 1.5;
+    }
+
+    /* Top Live Banner */
+    .live-banner {
+      background: linear-gradient(90deg, #dc2626, #ea580c);
+      color: white;
+      padding: 10px 16px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+    }
+
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+
+    .timer-badge {
+      background: rgba(0, 0, 0, 0.35);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.85rem;
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Mode Switcher (Client vs Coach Live) */
+    .mode-tabs {
+      display: flex;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 18px;
+      border: 1px solid var(--border);
+    }
+
+    .mode-tab {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 8px;
+      border-radius: 9px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-tab.active {
+      background: var(--emerald);
+      color: #04130e;
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Hero Profile */
+    .hero {
+      text-align: center;
+      padding: 18px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar-ring {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      padding: 3px;
+      background: linear-gradient(135deg, #ff0050, #00f2fe, var(--emerald));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #0b221a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .live-tag {
+      position: absolute;
+      bottom: -5px;
+      background: #ff0050;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero h1 {
+      font-size: 1.25rem;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .hero p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* VIP & Follow CTA Buttons */
+    .cta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-tiktok {
+      background: linear-gradient(135deg, #ff0050, #d90429);
+      color: white;
+    }
+
+    .btn-vip {
+      background: linear-gradient(135deg, var(--gold), #d97706);
+      color: #111;
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      width: 100%;
+      font-size: 0.95rem;
+      padding: 13px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+    }
+
+    /* Section Titles */
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--emerald-light);
+    }
+
+    .section-sub {
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* Diagnostic Quiz */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      padding: 13px 14px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn:hover, .quiz-btn.selected {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: var(--emerald);
+      transform: translateX(3px);
+    }
+
+    .quiz-num {
+      background: var(--emerald);
+      color: #04130e;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      margin-right: 10px;
+    }
+
+    .quiz-result {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.18), rgba(245, 158, 11, 0.12));
+      border: 1px solid var(--emerald);
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Product Cards */
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 16px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .product-card:hover {
+      border-color: var(--emerald-light);
+    }
+
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .live-code-badge {
+      background: var(--gold);
+      color: #111;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      text-transform: uppercase;
+    }
+
+    .product-tag {
+      font-size: 0.75rem;
+      color: var(--emerald-light);
+      background: rgba(16, 185, 129, 0.15);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .product-benefits {
+      list-style: none;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+
+    .product-benefits li {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .price-live {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gold-light);
+    }
+
+    .price-old {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    /* Coach / Teleprompter View */
+    .hidden {
+      display: none !important;
+    }
+
+    .script-step {
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 4px solid var(--emerald);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .script-step h4 {
+      color: var(--gold-light);
+      font-size: 0.92rem;
+      margin-bottom: 4px;
+    }
+
+    .script-step p {
+      font-size: 0.86rem;
+      color: #e2e8f0;
+    }
+
+    .word-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      font-size: 0.82rem;
+    }
+
+    .word-box {
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .word-bad {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .word-good {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    /* Floating Bottom Bar */
+    .floating-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(7, 23, 18, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      padding: 10px 16px;
+      z-index: 99;
+    }
+
+    .floating-inner {
+      max-width: 540px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BANNIÈRE D'URGENCE LIVE -->
+  <div class="live-banner">
+    <span class="pulse-dot"></span>
+    <span>OFFRE SPÉCIALE LIVE TIKTOK EN COURS</span>
+    <span class="timer-badge" id="countdown">14:59</span>
+  </div>
+
+  <div class="container">
+    <!-- BASCULE VUE CLIENT / VUE VENDEUR (COACH LIVE) -->
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tab-client" onclick="switchMode('client')">
+        🛍️ Vue Client (Lien Bio)
+      </button>
+      <button class="mode-tab" id="tab-coach" onclick="switchMode('coach')">
+        🎯 Mon Studio Live & Réglages
+      </button>
+    </div>
+
+    <!-- ==========================================
+         MODE 1 : VUE CLIENT (POUR LA BIO TIKTOK)
+         ========================================== -->
+    <div id="view-client">
+      <div class="hero">
+        <div class="avatar-ring">
+          <div class="avatar-inner">🌿</div>
+          <span class="live-tag">LIVE</span>
+        </div>
+        <h1 id="display-shop-name">Santé & Bien-Être Naturel — EDMARK</h1>
+        <p>Retrouvez votre vitalité, une digestion légère et un bien-être durable grâce à nos programmes naturels.</p>
+
+        <div class="cta-row">
+          <a id="tiktok-follow-link" href="https://www.tiktok.com" target="_blank" class="btn btn-tiktok">
+            ➕ S'abonner sur TikTok
+          </a>
+          <button onclick="joinVipClub()" class="btn btn-vip">
+            🔔 Alerte Prochain Live
+          </button>
+        </div>
+      </div>
+
+      <!-- QUIZ DIAGNOSTIC EN 30 SECONDES -->
+      <div class="section-card">
+        <div class="section-title">🩺 Diagnostic Bien-Être Express (Gratuit)</div>
+        <div class="section-sub">
+          Quel est votre objectif prioritaire aujourd'hui ? Touchez le chiffre correspondant à ce que vous avez vu dans le Live :
+        </div>
+
+        <div class="quiz-options">
+          <button class="quiz-btn" onclick="selectDiagnostic(1, this)">
+            <span><span class="quiz-num">1</span> Ventre gonflé, constipation, détox du côlon</span>
+            <span>➔</span>
+          </button>
+          <button class="quiz-btn" onclick="selectDiagnostic(2, this)">
+            <span><span class="quiz-num">2</span> Acidité, fatigue, immunité & équilibre interne</span>
+            <span>➔</span>
+          </button>
+          <button class="quiz-btn" onclick="selectDiagnostic(3, this)">
+            <span><span class="quiz-num">3</span> Perte de poids & ventre plat (Programme P4 complet)</span>
+            <span>➔</span>
+          </button>
+          <button class="quiz-btn" onclick="selectDiagnostic(4, this)">
+            <span><span class="quiz-num">4</span> Énergie, tension, circulation & cafés bien-être</span>
+            <span>➔</span>
+          </button>
+          <button class="quiz-btn" onclick="selectDiagnostic(5, this)">
+            <span><span class="quiz-num">5</span> Éclat de la peau, anti-âge & articulations</span>
+            <span>➔</span>
+          </button>
+        </div>
+
+        <div id="diagnostic-result" class="quiz-result"></div>
+      </div>
+
+      <!-- CATALOGUE NUMÉROTÉ DU LIVE -->
+      <div class="section-card">
+        <div class="section-title">📦 Les Solutions présentées dans le Live</div>
+        <div class="section-sub">
+          Cliquez sur le numéro mentionné pendant le direct pour réserver votre pack sur WhatsApp avec le bonus Live :
+        </div>
+
+        <div class="product-list" id="product-list">
+          <!-- Injecté dynamiquement par JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         MODE 2 : STUDIO LIVE & RÉGLAGES (POUR TOI)
+         ========================================== -->
+    <div id="view-coach" class="hidden">
+      <!-- 1. GÉNÉRATEUR D'ALERTE WHATSAPP AVANT LE LIVE -->
+      <div class="section-card">
+        <div class="section-title">🚀 1. Ramener du monde dès la 1ère minute</div>
+        <div class="section-sub">
+          Envoie ce message dans ton Statut WhatsApp et à ta liste de diffusion <strong>5 minutes avant de lancer ton Live</strong> :
+        </div>
+        <textarea id="wa-teaser-text" class="form-input" rows="4" readonly>🔴 Je passe en LIVE sur TikTok dans 5 minutes !
+Aujourd'hui je vous montre l'astuce naturelle pour dégonfler le ventre, retrouver l'énergie et purifier l'organisme 🌿.
+🎁 Cadeau spécial pour les 20 premiers connectés qui écrivent "1" dans le live !
+👉 Rejoignez-moi ici : https://www.tiktok.com/@mon_pseudo/live</textarea>
+        <button onclick="copyTeaser()" class="btn btn-vip" style="width:100%; margin-top:10px;">
+          📋 Copier le message d'alerte WhatsApp
+        </button>
+      </div>
+
+      <!-- 2. CONDUCTEUR DE LIVE (TÉLÉPROMPTEUR 1 TÉLÉPHONE) -->
+      <div class="section-card">
+        <div class="section-title">🎙️ 2. Phrases à dire toutes les 3 min en Live</div>
+        <div class="section-sub">
+          Répète cette boucle pendant tout ton live pour forcer l'algorithme TikTok à t'envoyer du monde et des abonnés :
+        </div>
+
+        <div class="script-step">
+          <h4>⏱️ Minute 0 à 2 : L'accroche "Symptôme + Chiffre"</h4>
+          <p>« Bienvenue à tous ceux qui arrivent ! Si tu as souvent le ventre ballonné après manger ou une grosse fatigue dès le matin, <strong>écris le chiffre 1 en commentaire</strong>, je t'explique pourquoi et quoi faire naturellement ! »</p>
+        </div>
+
+        <div class="script-step">
+          <h4>⏱️ Minute 2 à 4 : Booster Abonnés + Tap-Tap (Likes)</h4>
+          <p>« Avant que je vous montre la préparation du <strong>Numéro 1 (Shake Off)</strong>, cliquez sur le petit <strong>+ rouge sur ma photo en haut à gauche</strong> pour vous abonner et tapotez l'écran jusqu'à 5 000 likes ! Dès qu'on atteint le palier, je donne le bonus du jour ! »</p>
+        </div>
+
+        <div class="script-step">
+          <h4>⏱️ Minute 4 à 6 : Démonstration visuelle (1 Téléphone)</h4>
+          <p>Montre le sachet ou le verre en main (prépare un verre d'eau avec Shake Off ou Splina devant la caméra) : « Regardez comment ça agit en 6 à 8 heures sans douleur... Qui veut faire son diagnostic gratuit ? Écrivez <strong>2</strong> dans le chat ! »</p>
+        </div>
+
+        <div class="script-step">
+          <h4>⏱️ Minute 6 à 8 : Redirection vers la Bio (Sans mots interdits)</h4>
+          <p>« Pour ceux qui veulent le <strong>Pack Numéro 1 ou Numéro 2</strong> avec l'accompagnement du Live : ne mettez pas votre numéro ici. <strong>Cliquez sur ma photo en haut à gauche, puis cliquez sur le lien dans mon profil (la bio)</strong> et choisissez votre numéro ! »</p>
+        </div>
+      </div>
+
+      <!-- 3. DICTIONNAIRE ANTI-BLOCAGE TIKTOK -->
+      <div class="section-card">
+        <div class="section-title">🛡️ 3. Mots Interdits vs Mots Autorisés</div>
+        <div class="section-sub">
+          Sur TikTok, le robot écoute ta voix. Évite la colonne rouge pour ne jamais voir tes vues bloquées :
+        </div>
+        <div class="word-grid">
+          <div class="word-box word-bad">
+            <strong style="color:#f87171;">❌ INTERDIT EN LIVE</strong>
+            <ul style="margin-top:6px; padding-left:16px;">
+              <li>Achetez / Prix / FCFA</li>
+              <li>WhatsApp / Numéro</li>
+              <li>Médicament / Guérit</li>
+              <li>Ulcère / Maladie / Diabète</li>
+              <li>Perdre 10 kilos vite</li>
+            </ul>
+          </div>
+          <div class="word-box word-good">
+            <strong style="color:var(--emerald-light);">✅ DIS PLUTÔT</strong>
+            <ul style="margin-top:6px; padding-left:16px;">
+              <li>Se procurer / La valeur</li>
+              <li>Le lien dans mon profil</li>
+              <li>Complément / Astuce naturelle</li>
+              <li>Inconfort / Équilibre interne</li>
+              <li>Retrouver la ligne / Détox</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. PERSONNALISER TES INFOS (NUMÉRO WHATSAPP & TIKTOK) -->
+      <div class="section-card">
+        <div class="section-title">⚙️ 4. Tes Paramètres (WhatsApp & TikTok)</div>
+        <div class="section-sub">
+          Entre ton numéro WhatsApp (avec l'indicatif pays sans le +, ex: 2250700000000 ou 237600000000) :
+        </div>
+
+        <div class="form-group">
+          <label>Nom de ta boutique / Ton Nom :</label>
+          <input type="text" id="cfg-name" class="form-input" placeholder="Ex: Coach Bien-Être EDMARK" />
+        </div>
+
+        <div class="form-group">
+          <label>Ton Numéro WhatsApp (avec indicatif pays, ex: 22507000000) :</label>
+          <input type="text" id="cfg-phone" class="form-input" placeholder="Ex: 2250700000000" />
+        </div>
+
+        <div class="form-group">
+          <label>Ton @pseudo TikTok :</label>
+          <input type="text" id="cfg-tiktok" class="form-input" placeholder="Ex: @mon_pseudo_tiktok" />
+        </div>
+
+        <button onclick="saveConfig()" class="btn btn-whatsapp">
+          💾 Enregistrer mes informations
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BARRE FLOTTANTE EN BAS -->
+  <div class="floating-bar">
+    <div class="floating-inner">
+      <div>
+        <div style="font-size: 0.75rem; color: var(--muted);">Besoin d'un conseil personnalisé ?</div>
+        <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">Parler au conseiller du Live</div>
+      </div>
+      <button onclick="contactAdvisor()" class="btn btn-whatsapp" style="width: auto; padding: 10px 16px;">
+        💬 Écrire sur WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Configuration par défaut (modifiable dans l'onglet Studio)
+    const defaultConfig = {
+      shopName: "Santé & Bien-Être Naturel — EDMARK",
+      whatsappPhone: "2250700000000",
+      tiktokHandle: "@votre_pseudo_tiktok"
+    };
+
+    const products = [
+      {
+        code: 1,
+        name: "Shake Off Phyto Fiber",
+        tag: "Best-Seller Détox & Ventre Plat",
+        priceLive: "22 000 FCFA",
+        priceOld: "27 000 FCFA",
+        benefits: [
+          "🌿 Nettoie et purifie le côlon en 6 à 8 heures",
+          "✨ Soulage les ballonnements et la constipation",
+          "🔥 Aide à dégonfler le ventre naturellement (Fibres végétales, Roselle, Avoine)"
+        ]
+      },
+      {
+        code: 2,
+        name: "Splina Liquid Chlorophyll",
+        tag: "Équilibre Acido-Basique & Vitalité",
+        priceLive: "23 000 FCFA",
+        priceOld: "28 000 FCFA",
+        benefits: [
+          "🍃 Chlorophylle liquide pure (Mûrier blanc)",
+          "🛡️ Apaise l'acidité digestive et renforce l'immunité",
+          "⚡ Oxygène les cellules et réduit la fatigue chronique"
+        ]
+      },
+      {
+        code: 3,
+        name: "Pack P4 Complet (Détox & Gestion du Poids)",
+        tag: "Programme Transformation Complet",
+        priceLive: "85 000 FCFA",
+        priceOld: "105 000 FCFA",
+        benefits: [
+          "🏆 Inclut : Shake Off + Splina + MRT Complex + Cafés Bien-Être",
+          "🔥 Brûle les graisses tout en conservant l'énergie",
+          "📋 Accompagnement personnalisé étape par étape inclus"
+        ]
+      },
+      {
+        code: 4,
+        name: "Duo Ginseng Coffee & Red Yeast Coffee",
+        tag: "Énergie, Circulation & Bien-Être",
+        priceLive: "18 000 FCFA",
+        priceOld: "22 000 FCFA",
+        benefits: [
+          "☕ Goût délicieux aux extraits naturels de Ginseng et Levure de Riz Rouge",
+          "❤️ Favorise une bonne circulation et le bon équilibre du cholestérol",
+          "⚡ Booste la concentration et la vitalité quotidienne"
+        ]
+      },
+      {
+        code: 5,
+        name: "Cocollagen (Collagène Marin au Chocolat)",
+        tag: "Beauté de la Peau & Articulations",
+        priceLive: "16 000 FCFA",
+        priceOld: "20 000 FCFA",
+        benefits: [
+          "✨ Raffermit la peau et ravive l'éclat naturel du teint",
+          "🦴 Soutient la souplesse des articulations",
+          "🍫 Boisson chocolatée savoureuse riche en peptides de collagène"
+        ]
+      }
+    ];
+
+    function getConfig() {
+      const saved = localStorage.getItem("edmark_live_cfg");
+      return saved ? JSON.parse(saved) : defaultConfig;
+    }
+
+    function applyConfigToUI() {
+      const cfg = getConfig();
+      document.getElementById("display-shop-name").textContent = cfg.shopName;
+      document.getElementById("cfg-name").value = cfg.shopName;
+      document.getElementById("cfg-phone").value = cfg.whatsappPhone;
+      document.getElementById("cfg-tiktok").value = cfg.tiktokHandle;
+
+      const cleanHandle = cfg.tiktokHandle.replace(/^@/, "");
+      document.getElementById("tiktok-follow-link").href = `https://www.tiktok.com/@${cleanHandle}`;
+      document.getElementById("wa-teaser-text").value =
+        `🔴 Je passe en LIVE sur TikTok dans 5 minutes !\n` +
+        `Aujourd'hui je vous montre l'astuce naturelle (EDMARK) pour dégonfler le ventre, retrouver l'énergie et purifier l'organisme 🌿.\n` +
+        `🎁 Bonus spécial pour les premiers connectés qui écrivent "1" dans le live !\n` +
+        `👉 Rejoignez le direct ici : https://www.tiktok.com/@${cleanHandle}/live`;
+    }
+
+    function saveConfig() {
+      const cfg = {
+        shopName: document.getElementById("cfg-name").value.trim() || defaultConfig.shopName,
+        whatsappPhone: document.getElementById("cfg-phone").value.replace(/[^0-9]/g, "") || defaultConfig.whatsappPhone,
+        tiktokHandle: document.getElementById("cfg-tiktok").value.trim() || defaultConfig.tiktokHandle
+      };
+      localStorage.setItem("edmark_live_cfg", JSON.stringify(cfg));
+      applyConfigToUI();
+      alert("✅ Vos informations (WhatsApp et TikTok) ont bien été enregistrées !");
+    }
+
+    function renderProducts() {
+      const listEl = document.getElementById("product-list");
+      listEl.innerHTML = products.map(p => `
+        <div class="product-card" id="prod-${p.code}">
+          <div class="product-header">
+            <span class="live-code-badge">PRODUIT #${p.code}</span>
+            <span class="product-tag">${p.tag}</span>
+          </div>
+          <div class="product-title">${p.name}</div>
+          <ul class="product-benefits">
+            ${p.benefits.map(b => `<li>${b}</li>`).join("")}
+          </ul>
+          <div class="price-row">
+            <span class="price-live">${p.priceLive}</span>
+            <span class="price-old">${p.priceOld}</span>
+          </div>
+          <button class="btn btn-whatsapp" onclick="orderProduct(${p.code})">
+            📲 Commander le #${p.code} (${p.name})
+          </button>
+        </div>
+      `).join("");
+    }
+
+    function selectDiagnostic(code, btnEl) {
+      document.querySelectorAll(".quiz-btn").forEach(b => b.classList.remove("selected"));
+      btnEl.classList.add("selected");
+
+      const prod = products.find(p => p.code === code);
+      const resBox = document.getElementById("diagnostic-result");
+      resBox.style.display = "block";
+      resBox.innerHTML = `
+        <div style="font-size:0.8rem; color:var(--gold-light); font-weight:700; margin-bottom:4px;">
+          ✅ RECOMMANDATION PERSONNALISÉE DU LIVE :
+        </div>
+        <div style="font-size:1.05rem; font-weight:800; margin-bottom:6px;">
+          Solution #${prod.code} : ${prod.name}
+        </div>
+        <p style="font-size:0.85rem; color:#e2e8f0; margin-bottom:12px;">
+          ${prod.benefits[0]} — Tarif Spécial Live : <strong>${prod.priceLive}</strong>
+        </p>
+        <button class="btn btn-whatsapp" onclick="orderProduct(${prod.code})">
+          💬 Réserver ma Solution #${prod.code} sur WhatsApp
+        </button>
+      `;
+    }
+
+    function buildWhatsAppUrl(message) {
+      const cfg = getConfig();
+      const phone = cfg.whatsappPhone.replace(/[^0-9]/g, "");
+      return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    }
+
+    function orderProduct(code) {
+      const prod = products.find(p => p.code === code);
+      const msg = `Bonjour ! 👋 Je viens de votre LIVE TikTok 🎥.\nJe souhaite commander le PRODUIT #${prod.code} : *${prod.name}* au tarif spécial Live (${prod.priceLive}).\nPouvez-vous m'indiquer comment procéder pour la livraison ?`;
+      window.open(buildWhatsAppUrl(msg), "_blank");
+    }
+
+    function joinVipClub() {
+      const msg = `Bonjour ! 👋 Je viens de votre profil TikTok.\nJe souhaite être ajouté(e) à votre liste VIP pour recevoir les alertes de vos prochains Lives Bien-Être EDMARK et les offres flash ! 🔔🌿`;
+      window.open(buildWhatsAppUrl(msg), "_blank");
+    }
+
+    function contactAdvisor() {
+      const msg = `Bonjour ! 👋 Je vous suis en LIVE sur TikTok et j'aimerais un conseil bien-être personnalisé sur vos produits EDMARK.`;
+      window.open(buildWhatsAppUrl(msg), "_blank");
+    }
+
+    function switchMode(mode) {
+      document.getElementById("tab-client").classList.toggle("active", mode === "client");
+      document.getElementById("tab-coach").classList.toggle("active", mode === "coach");
+      document.getElementById("view-client").classList.toggle("hidden", mode !== "client");
+      document.getElementById("view-coach").classList.toggle("hidden", mode !== "coach");
+    }
+
+    function copyTeaser() {
+      const text = document.getElementById("wa-teaser-text").value;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("📋 Message copié ! Colle-le maintenant dans ton statut WhatsApp ou ton groupe.");
+      });
+    }
+
+    // Compte à rebours d'urgence (15 minutes en boucle)
+    let remainingSeconds = 15 * 60 - 1;
+    setInterval(() => {
+      if (remainingSeconds <= 0) remainingSeconds = 15 * 60;
+      remainingSeconds--;
+      const m = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
+      const s = String(remainingSeconds % 60).padStart(2, "0");
+      document.getElementById("countdown").textContent = `${m}:${s}`;
+    }, 1000);
+
+    // Initialisation
+    applyConfigToUI();
+    renderProducts();
+  </script>
+</body>
+</html>

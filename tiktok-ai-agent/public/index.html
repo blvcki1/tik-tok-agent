@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent IA TikTok — Studio Retouche Autonome & Auto-Publication</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-logo">🎵</div>
+      <div>
+        <h1>TikTok AI Agent Studio</h1>
+        <p>Conception Visuelle 9:16 • Retouche IA Gemini • Publication & Auto-Pilot TikTok</p>
+      </div>
+    </div>
+
+    <div class="status-pills">
+      <span id="pill-gemini" class="pill ok">🧠 IA : Agent Autonome Actif</span>
+      <span id="pill-tiktok" class="pill warn">🔗 TikTok : Mode Prêt-à-Publier</span>
+      <span id="pill-autopilot" class="pill ok">🤖 Auto-Pilot : ON</span>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="nav-tabs">
+    <button class="nav-btn active" id="tab-btn-studio" onclick="switchTab('studio')">
+      🎨 1. Studio Upload, Retouche IA & Conception
+    </button>
+    <button class="nav-btn" id="tab-btn-autopilot" onclick="switchTab('autopilot')">
+      🤖 2. Agent Auto-Pilot & Planificateur (<span id="post-count">0</span>)
+    </button>
+    <button class="nav-btn" id="tab-btn-settings" onclick="switchTab('settings')">
+      🔗 3. Connexion TikTok & Clé Gemini IA (Guide)
+    </button>
+  </nav>
+
+  <main class="main-wrap">
+
+    <!-- ====================================================================
+         ONGLET 1 : STUDIO UPLOAD, RETOUCHE IA 9:16 & CONCEPTION AUTONOME
+         ==================================================================== -->
+    <section id="tab-studio">
+      <div class="studio-grid">
+
+        <!-- COLONNE GAUCHE : APERÇU TIKTOK 9:16 EN TEMPS RÉEL -->
+        <div class="panel" style="text-align: center;">
+          <div class="panel-title" style="justify-content: center;">📱 Aperçu TikTok Vertical 9:16 (1080×1920)</div>
+          <div class="panel-sub">Rendu en direct avec retouche IA, bandeaux Hook et filtres</div>
+
+          <div class="phone-frame">
+            <div class="canvas-wrap">
+              <canvas id="preview-canvas" width="1080" height="1920"></canvas>
+              <video id="source-video" muted loop playsinline class="hidden"></video>
+            </div>
+          </div>
+
+          <div class="actions-bar" style="justify-content: center; margin-top: 16px;">
+            <button class="btn btn-outline" onclick="generatePosterWithoutPhoto()">
+              🎨 Créer un Visuel IA sans photo
+            </button>
+            <button class="btn btn-outline" onclick="downloadProcessedMedia()">
+              📥 Télécharger HD (9:16)
+            </button>
+          </div>
+        </div>
+
+        <!-- COLONNE DROITE : UPLOAD, RETOUCHE IA & RÉDACTION AUTONOME -->
+        <div>
+
+          <!-- BLOC A : UPLOAD PHOTO/VIDÉO + SUJET + BOUTON MAGIQUE IA -->
+          <div class="panel">
+            <div class="panel-title">✨ Étape 1 : Importer Photo/Vidéo & Lancer l'Agent IA</div>
+            <div class="panel-sub">
+              Importe une photo ou vidéo brute (ou laisse vide pour que l'agent crée une affiche) puis clique sur le bouton d'analyse et retouche autonome.
+            </div>
+
+            <div class="dropzone" onclick="document.getElementById('file-input').click()">
+              <input type="file" id="file-input" accept="image/*,video/*" class="hidden" onchange="handleMediaUpload(event)" />
+              <div style="font-size: 1.8rem; margin-bottom: 4px;">📸 🎬</div>
+              <div style="font-weight: 800; color: #34d399;">Clique ici pour importer une Photo ou une Vidéo</div>
+              <div style="font-size: 0.78rem; color: var(--muted);" id="upload-filename">
+                Recadrage automatique en 9:16 TikTok + correction lumière/couleurs par l'IA
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-row">
+                <label>Sujet / Produit à mettre en avant :</label>
+                <input type="text" id="input-topic" class="input" value="Shake Off & Splina EDMARK : Ventre plat et détox naturelle en 8h" placeholder="Ex: Shake Off détox, Splina acidité..." />
+              </div>
+
+              <div class="form-row">
+                <label>Objectif de la publication :</label>
+                <select id="input-goal" class="select">
+                  <option value="annonce_live_15min">🔴 Post Tremplin (15 min avant mon Live TikTok)</option>
+                  <option value="vente_directe" selected>🛍️ Vente Directe & Envoi vers le Lien en Bio</option>
+                  <option value="conseil_viral_abonnes">🚀 Conseil Viral (Gagner un max d'abonnés)</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn btn-ai" id="btn-run-ai" onclick="runAutonomousAI()">
+              ✨ Analyser, Retoucher & Concevoir la Publication avec l'IA (Autonome)
+            </button>
+          </div>
+
+          <!-- BLOC B : RÉGLAGES DE RETOUCHE IA & HABILLAGE VISUEL -->
+          <div class="panel">
+            <div class="panel-title">🎛️ Étape 2 : Retouches Visuelles & Effets 9:16 (Appliqués par l'IA)</div>
+
+            <div id="ai-diagnosis-box" class="ai-banner hidden"></div>
+
+            <div class="preset-row">
+              <button class="chip active" onclick="applyPreset('vitalite_emeraude', this)">🌿 Vitalité Émeraude</button>
+              <button class="chip" onclick="applyPreset('eclat_studio', this)">☀️ Éclat Studio HD</button>
+              <button class="chip" onclick="applyPreset('chaleur_doree', this)">✨ Chaleur Dorée</button>
+              <button class="chip" onclick="applyPreset('cinema_contraste', this)">🎬 Cinéma Contraste</button>
+              <button class="chip" onclick="toggleCropMode()">📐 Mode 9:16 : <span id="crop-mode-label">Fond Flouté Pro</span></button>
+            </div>
+
+            <div class="sliders-grid">
+              <div class="slider-box">
+                <div class="slider-header"><span>Luminosité</span><span id="val-brightness">108%</span></div>
+                <input type="range" id="sl-brightness" min="70" max="150" value="108" oninput="updateRetouchFromUI()" />
+              </div>
+              <div class="slider-box">
+                <div class="slider-header"><span>Contraste</span><span id="val-contrast">114%</span></div>
+                <input type="range" id="sl-contrast" min="70" max="160" value="114" oninput="updateRetouchFromUI()" />
+              </div>
+              <div class="slider-box">
+                <div class="slider-header"><span>Saturation / Éclat</span><span id="val-saturation">122%</span></div>
+                <input type="range" id="sl-saturation" min="60" max="180" value="122" oninput="updateRetouchFromUI()" />
+              </div>
+              <div class="slider-box">
+                <div class="slider-header"><span>Chaleur / Filtre Doré</span><span id="val-warmth">12%</span></div>
+                <input type="range" id="sl-warmth" min="0" max="45" value="12" oninput="updateRetouchFromUI()" />
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px;">
+              <div class="form-row" style="margin-bottom:0;">
+                <label>Bandeau d'accroche (Hook en haut de l'écran) :</label>
+                <input type="text" id="input-hook-top" class="input" value="✨ VENTRE PLAT & DÉTOX EN 8H !" oninput="renderCanvas()" />
+              </div>
+              <div class="form-row" style="margin-bottom:0;">
+                <label>Sticker d'action (En bas de l'écran) :</label>
+                <input type="text" id="input-badge-bottom" class="input" value="Écris 1 en commentaire ou Lien en Bio 🌿" oninput="renderCanvas()" />
+              </div>
+            </div>
+          </div>
+
+          <!-- BLOC C : LÉGENDE VIRALE, HASHTAGS, VOIX-OFF & PUBLICATION -->
+          <div class="panel">
+            <div class="panel-title">📝 Étape 3 : Légende SEO TikTok, Voix-Off & Publication</div>
+
+            <div class="form-row">
+              <label>Description / Légende TikTok (Sans mots bloqués par l'algorithme) :</label>
+              <textarea id="input-caption" class="textarea"></textarea>
+            </div>
+
+            <div class="form-row">
+              <label>Hashtags Optimisés :</label>
+              <input type="text" id="input-hashtags" class="input" value="#bienetre #detoxnaturelle #edmark #ventreplat #santenaturelle #pourtoi" />
+            </div>
+
+            <div class="form-row">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <label style="margin-bottom:0;">🎙️ Script Voix-Off généré par l'IA (15-25s) :</label>
+                <button class="btn btn-outline" style="padding:4px 10px; font-size:0.76rem;" onclick="speakVoiceover()">
+                  🔊 Écouter la Voix-Off IA
+                </button>
+              </div>
+              <textarea id="input-voiceover" class="textarea" style="min-height: 75px;"></textarea>
+            </div>
+
+            <div class="form-row">
+              <label>⏰ Heure de publication programmée (Optionnel — pour l'Auto-Pilot) :</label>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="datetime-local" id="input-schedule-time" class="input" style="flex: 1;" />
+                <button class="btn btn-gold" onclick="setPreLive15Min()">
+                  🔥 Régler à « Dans 15 min » (Avant mon Live)
+                </button>
+              </div>
+            </div>
+
+            <div class="actions-bar">
+              <button class="btn btn-tiktok" style="flex: 1;" onclick="saveOrPublishPost('publish_now')">
+                🚀 Publier Directement sur TikTok
+              </button>
+              <button class="btn btn-emerald" style="flex: 1;" onclick="saveOrPublishPost('schedule')">
+                🤖 Programmer en Publication Autonome
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ONGLET 2 : AGENT AUTO-PILOT & CALENDRIER DES PUBLICATIONS
+         ==================================================================== -->
+    <section id="tab-autopilot" class="hidden">
+      <div class="panel">
+        <div class="panel-title">🤖 Pilote Automatique (Génération & Planification 100% Autonome)</div>
+        <div class="panel-sub">
+          Indique le thème de ta journée (ou laisse tes produits EDMARK par défaut) : l'Agent va concevoir et programmer tout seul <strong>3 publications complètes</strong> (1 Post Abonnés + 1 Post Produit + 1 Post Tremplin 15 min avant ton Live).
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+          <div style="flex: 1; min-width: 260px;">
+            <label style="font-size: 0.82rem; font-weight: 700; color: #cbd5e1; display:block; margin-bottom:5px;">
+              Thème ou Produit du jour pour l'Agent Autonome :
+            </label>
+            <input type="text" id="autopilot-topic" class="input" value="Programme Détox EDMARK : Shake Off + Chlorophylle Splina" />
+          </div>
+          <button class="btn btn-ai" style="width: auto; padding: 12px 22px;" onclick="generateAutonomousBatch()">
+            ⚡ Générer & Programmer 3 Publications Autonomes
+          </button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">📅 File d'attente & Historique des Publications de l'Agent</div>
+        <div class="panel-sub">
+          Le serveur vérifie automatiquement toutes les 15 secondes les publications programmées pour les envoyer à l'heure exacte.
+        </div>
+
+        <div id="posts-container" class="post-grid"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ONGLET 3 : CONNEXION TIKTOK API & CLÉ GOOGLE GEMINI (+ GUIDE)
+         ==================================================================== -->
+    <section id="tab-settings" class="hidden">
+      <div class="studio-grid">
+
+        <!-- GUIDE PAS À PAS -->
+        <div class="panel">
+          <div class="panel-title">📖 Guide Rapide : Connecter Gemini IA & TikTok</div>
+          <div class="panel-sub">Comment activer le plein potentiel de ton Agent en quelques minutes</div>
+
+          <div style="font-size: 0.86rem; color: #e2e8f0; display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--emerald); padding: 12px; border-radius: 8px;">
+              <strong style="color: #34d399;">1. Clé Google Gemini API (Gratuite)</strong>
+              <p style="margin-top: 4px;">
+                • Rendez-vous sur <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#38bdf8;">aistudio.google.com/app/apikey</a>.<br/>
+                • Cliquez sur <strong>Create API Key</strong>.<br/>
+                • Collez-la ci-contre : l'Agent utilisera <strong>Gemini 2.5 Flash Vision</strong> pour inspecter vos vraies photos/vidéos et rédiger des posts sur mesure.
+              </p>
+            </div>
+
+            <div style="background: rgba(255, 0, 80, 0.1); border-left: 4px solid var(--tiktok-pink); padding: 12px; border-radius: 8px;">
+              <strong style="color: #fb7185;">2. API Officielle TikTok Content Posting</strong>
+              <p style="margin-top: 4px;">
+                • Créez une application gratuite sur <a href="https://developers.tiktok.com" target="_blank" style="color:#38bdf8;">developers.tiktok.com</a>.<br/>
+                • Activez les produits <strong>Login Kit</strong> et <strong>Content Posting API</strong> (scopes : <code>user.info.basic</code>, <code>video.publish</code>, <code>video.upload</code>).<br/>
+                • Ajoutez l'URL de redirection (Callback) : <code>http://localhost:3005/api/tiktok/callback</code>.<br/>
+                • Collez votre <strong>Client Key</strong> et <strong>Client Secret</strong> à droite puis cliquez sur <strong>Connecter mon compte TikTok</strong>.
+              </p>
+            </div>
+
+            <div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--gold); padding: 12px; border-radius: 8px;">
+              <strong style="color: #fbbf24;">💡 Mode Prêt-à-l'emploi sans attendre TikTok</strong>
+              <p style="margin-top: 4px;">
+                Même avant d'avoir validé vos clés développeur TikTok, l'application fonctionne à 100 % : elle retouche vos photos/vidéos en 9:16, incruste les hooks, génère les légendes et vous permet de télécharger le visuel final + copier la légende en 1 clic !
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORMULAIRE DES CLÉS ET PARAMÈTRES -->
+        <div class="panel">
+          <div class="panel-title">⚙️ Paramètres de l'Agent & Clés API</div>
+          <div class="panel-sub">Enregistrés localement de manière sécurisée dans votre application</div>
+
+          <div class="form-row">
+            <label>Thématique / Contexte permanent de l'Agent :</label>
+            <input type="text" id="cfg-niche" class="input" />
+          </div>
+
+          <div class="form-row">
+            <label>Votre @pseudo TikTok :</label>
+            <input type="text" id="cfg-handle" class="input" placeholder="@votre_compte" />
+          </div>
+
+          <div class="form-row">
+            <label>🧠 Clé API Google Gemini (Optionnel — Active Gemini 2.5 Flash Vision) :</label>
+            <input type="password" id="cfg-gemini-key" class="input" placeholder="AIzaSy..." />
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--border); margin: 18px 0;" />
+
+          <div class="form-row">
+            <label>🎵 TikTok Developer — Client Key :</label>
+            <input type="text" id="cfg-tt-key" class="input" placeholder="aw..." />
+          </div>
+
+          <div class="form-row">
+            <label>🎵 TikTok Developer — Client Secret :</label>
+            <input type="password" id="cfg-tt-secret" class="input" placeholder="Votre Client Secret TikTok" />
+          </div>
+
+          <div class="actions-bar">
+            <button class="btn btn-emerald" style="flex: 1;" onclick="saveAllSettings()">
+              💾 Enregistrer la Configuration
+            </button>
+            <button class="btn btn-tiktok" style="flex: 1;" onclick="connectTikTokOAuth()">
+              🔗 Connecter mon compte TikTok (OAuth)
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
