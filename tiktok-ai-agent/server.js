@@ -368,6 +368,12 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { ok: true });
   }
 
+  // --- TikTok Developer Site Verification ---
+  if (pathname.includes("tiktok-developers-site-verification")) {
+    res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+    return res.end("tiktok-developers-site-verification=Gv9QulUdLM3zo1burwKGl7HNSROpgEbM");
+  }
+
   // --- API : État général (Settings + Posts) ---
   if (pathname === "/api/state" && req.method === "GET") {
     const store = loadStore();
@@ -549,7 +555,8 @@ const server = http.createServer(async (req, res) => {
   if (pathname === "/api/tiktok/auth-url" && req.method === "GET") {
     const store = loadStore();
     const clientKey = store.settings.tiktokClientKey;
-    const redirectUri = `http://${req.headers.host}/api/tiktok/callback`;
+    const proto = req.headers["x-forwarded-proto"] || (req.headers.host?.includes("localhost") ? "http" : "https");
+    const redirectUri = `${proto}://${req.headers.host}/api/tiktok/callback`;
     const csrfState = crypto.randomBytes(8).toString("hex");
 
     if (!clientKey) {
@@ -576,7 +583,8 @@ const server = http.createServer(async (req, res) => {
   if (pathname === "/api/tiktok/callback" && req.method === "GET") {
     const code = parsedUrl.searchParams.get("code");
     const store = loadStore();
-    const redirectUri = `http://${req.headers.host}/api/tiktok/callback`;
+    const proto = req.headers["x-forwarded-proto"] || (req.headers.host?.includes("localhost") ? "http" : "https");
+    const redirectUri = `${proto}://${req.headers.host}/api/tiktok/callback`;
 
     if (code && store.settings.tiktokClientKey && store.settings.tiktokClientSecret) {
       try {
